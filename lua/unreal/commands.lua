@@ -543,6 +543,10 @@ function Stage_UbtGenCmd()
             local fbegin, fend = line:find("\"file\": ")
             if fbegin then
                 currentFilename = line:sub(fend+1, -2)
+
+                -- Remove project dir from file name to reduce rsp file name length
+                currentFilename = currentFilename:gsub(CurrentGenData.prjDir:gsub("\\", "\\\\"), "")
+
                 logWithVerbosity(kLogLevel_Verbose, "currentfile: " .. currentFilename)
             end
             table.insert(contentLines, line .. "\n")
